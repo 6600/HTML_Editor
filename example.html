@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta charset="utf-8">
+
+<title>wysihtml5 - Advanced Demo</title>
+
+<style>
+  body {
+    font-family: Verdana;
+    font-size: 11px;
+  }
+
+  h2 {
+    margin-bottom: 0;
+  }
+
+  small {
+    display: block;
+    margin-top: 40px;
+    font-size: 9px;
+  }
+
+  small,
+  small a {
+    color: #666;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  #toolbar [data-wysihtml5-action] {
+    float: right;
+  }
+
+  #toolbar,
+  textarea {
+    width: 920px;
+    padding: 5px;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    height: 280px;
+    border: 2px solid green;
+    font-family: Verdana;
+    font-size: 11px;
+  }
+
+  textarea:focus {
+    color: black;
+    border: 2px solid black;
+  }
+
+  .wysihtml5-command-active {
+    font-weight: bold;
+  }
+
+  [data-wysihtml5-dialog] {
+    margin: 5px 0 0;
+    padding: 5px;
+    border: 1px solid #666;
+  }
+
+  a[data-wysihtml5-command-value="red"] {
+    color: red;
+  }
+
+  a[data-wysihtml5-command-value="green"] {
+    color: green;
+  }
+
+  a[data-wysihtml5-command-value="blue"] {
+    color: blue;
+  }
+</style>
+
+<h1>wysihtml5 - Advanced Editor Example</h1>
+
+<form>
+  <div id="toolbar" style="display: none;">
+    <a data-wysihtml5-command="bold" title="CTRL+B">加粗</a> |
+    <a data-wysihtml5-command="italic" title="CTRL+I">斜体</a> |
+    <a data-wysihtml5-command="createLink">插入链接</a> |
+    <a data-wysihtml5-command="insertImage">插入图片</a> |
+    <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1">h1</a> |
+    <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2">h2</a> |
+    <a data-wysihtml5-command="insertUnorderedList">无序列表</a> |
+    <a data-wysihtml5-command="insertOrderedList">排序列表</a> |
+    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">红色</a> |
+    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green">绿色</a> |
+    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue">蓝色</a> |
+    <a data-wysihtml5-command="undo">撤销</a> |
+    <a data-wysihtml5-command="redo">重做</a> |
+    <a data-wysihtml5-command="insertSpeech">speech</a>
+    <a data-wysihtml5-action="change_view">切换到HTML视图</a>
+
+    <div data-wysihtml5-dialog="createLink" style="display: none;">
+      <label>
+        Link:
+        <input data-wysihtml5-dialog-field="href" value="http://">
+      </label>
+      <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">放弃</a>
+    </div>
+
+    <div data-wysihtml5-dialog="insertImage" style="display: none;">
+      <label>
+        Image:
+        <input data-wysihtml5-dialog-field="src" value="http://">
+      </label>
+      <label>
+        Align:
+        <select data-wysihtml5-dialog-field="className">
+          <option value="">默认</option>
+          <option value="wysiwyg-float-left">左</option>
+          <option value="wysiwyg-float-right">右</option>
+        </select>
+      </label>
+      <a data-wysihtml5-dialog-action="save">确定</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">放弃</a>
+    </div>
+
+  </div>
+  <textarea id="textarea" placeholder="输入文字..."></textarea>
+  <br><input type="reset" value="清空文本框!">
+</form>
+
+<script src="advanced.js"></script>
+<script src="wysihtml5-0.4.0pre.min.js"></script>
+<script>
+  var editor = new wysihtml5.Editor("textarea", {
+    toolbar:        "toolbar",
+    stylesheets:    "stylesheet.css",
+    parserRules:    wysihtml5ParserRules
+  });
+
+  var log = document.getElementById("log");
+
+  editor
+    .on("load", function() {
+      console.log("load");
+    })
+    .on("focus", function() {
+      log.innerHTML += "<div>focus</div>";
+    })
+    .on("blur", function() {
+      log.innerHTML += "<div>blur</div>";
+    })
+    .on("change", function() {
+      log.innerHTML += "<div>change</div>";
+    })
+    .on("paste", function() {
+      log.innerHTML += "<div>paste</div>";
+    })
+    .on("newword:composer", function() {
+      log.innerHTML += "<div>newword:composer</div>";
+    })
+    .on("undo:composer", function() {
+      log.innerHTML += "<div>undo:composer</div>";
+    })
+    .on("redo:composer", function() {
+      log.innerHTML += "<div>redo:composer</div>";
+    });
+</script>
